@@ -1,0 +1,12 @@
+
+J
+java:S3740"/Provide the parametrized type for this generic.(¨í×²ûÿÿÿÿ
+J
+java:S3740"/Provide the parametrized type for this generic.(üÕß…þÿÿÿÿ
+o
+java:S2293#"YReplace the type specification in this constructor call with the diamond operator ("<>").(»ÄÇÑ
+t	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(Ðâ²¦øÿÿÿÿ
+^
+java:S2166"CRename this class to remove "Exception" or correct its inheritance.(ÅË”°úÿÿÿÿ
+K
+java:S1128"0Remove this unused import 'java.time.LocalDate'.(›‘¬èýÿÿÿÿ

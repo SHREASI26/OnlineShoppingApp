@@ -1,0 +1,11 @@
+
+m
+java:S1192+"PDefine a constant instead of duplicating this literal "user/user-login" 6 times.(θδ­¶8Τ ίτ1
+c
+java:S1192*"FDefine a constant instead of duplicating this literal "login" 5 times.(³¨ 8Υ ίτ1
+v	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(ϊΉΤα8Χ ίτ1
+]	java:S125<"<This block of commented-out lines of code should be removed.(Ό½Έÿÿÿÿÿ8ρ ίτ1
+T
+java:S1128"8Remove this unused import 'org.apache.juli.logging.Log'.(¨΄“78σ ίτ1
+Y
+java:S1128	"<Remove this unused import 'org.springframework.boot.Banner'.(φ‡νζ8σ ίτ1

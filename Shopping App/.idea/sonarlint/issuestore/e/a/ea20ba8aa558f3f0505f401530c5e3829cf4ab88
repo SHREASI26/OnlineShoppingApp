@@ -1,0 +1,9 @@
+
+o	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(ˆƒ¤É
+T
+java:S1155#">Use isEmpty() to check whether the collection is empty or not.(óÛ´ñ
+J
+java:S1874*"/Remove this use of "getYear"; it is deprecated.(üÔê„ûÿÿÿÿ
+Z
+java:S1128
+"DRemove this unused import 'org.springframework.http.HttpStatusCode'.(®å™Õ

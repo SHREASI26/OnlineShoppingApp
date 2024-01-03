@@ -1,0 +1,255 @@
+use shopping_db;
+
+-- USER TABLE
+---------------
+-- create table user(
+-- 	user_id int auto_increment,
+--     full_name varchar(40) not null,
+--     email varchar(50) not null,
+--     password varchar(30) not null,
+--     address varchar(100) not null,
+--     phone_number varchar(10) not null,
+--     dob date not null,
+--     wallet_balance decimal not null,
+--     primary key(user_id)
+-- )auto_increment = 100;
+
+
+-- CATEGORY TABLE
+------------------
+-- create table category(
+-- 	category_id int not null auto_increment,
+--     category_name varchar(30) not null,
+--     primary key(category_id)
+-- )auto_increment = 1;
+
+
+
+
+-- PRODUCT-IMAGE TABLE
+-----------------------
+-- create table product_image(
+-- 	image_id int not null auto_increment,
+--     product_id int,
+--     image_url varchar(300),
+--     primary key(image_id),
+--     foreign key(product_id) references product(product_id)
+-- )auto_increment = 1;
+
+
+
+-- PRODUCT TABLE
+-----------------
+-- create table product(
+-- 	product_id int not null auto_increment,
+--     product_name varchar(30) not null,
+--     description varchar(150) not null,
+--     price decimal not null,
+--     stock_quantity int,
+--     category_id int not null,
+--     primary key(product_id),
+--     foreign key(category_id) references category(category_id)
+-- )auto_increment = 1;
+
+
+-- CARTS Table
+----------------
+-- create table cart(
+-- 	cart_id int not null auto_increment primary Key,
+-- 	user_id int not null,
+-- 	foreign key(user_id) references user(user_id)
+-- );
+
+
+
+-- CART ITEMS Table
+--------------------
+-- create table cart_item(
+--     item_id int auto_increment primary key,
+--     cart_id int not null,
+--     product_id int not null,
+--     quantity int not null,
+--     foreign key(cart_id) references cart(cart_id),
+--     foreign key(product_id) references product(product_id)
+-- );
+
+
+
+-- ORDER Table
+------------------
+-- create table orders(
+-- 	order_id int auto_increment,
+--     user_id int,
+--     order_date date not null,
+--     total_amount decimal not null,
+--     primary key(order_id),
+--     foreign key(user_id) references user(user_id)
+-- );
+
+
+
+-- ORDER-ITEM Table
+-----------------------
+-- create table order_item(
+-- 	order_item_id int auto_increment primary key,
+--     order_id int,
+--     product_id int,
+--     quantity int,
+--     item_price decimal not null,
+--     foreign key(order_id) references orders(order_id),
+--     foreign key(product_id) references product(product_id)
+-- );
+
+
+-- ADDRESS Table
+-- *************
+-- create table address(
+-- 	address_id int auto_increment primary key,
+--     house_number varchar(30),
+--     street_name varchar(50),
+--     city varchar(30),
+--     state varchar(50),
+--     country varchar(30),
+--     pincode varchar(6)
+-- )auto_increment = 10;
+
+
+-- EXTRA WORK ON USER FOR ADDING ADDRESS_ID category 
+-- -------------------------------------------
+-- alter table user 
+-- drop column address;
+-- ALTER TABLE user
+-- ADD address_id int;
+-- ALTER TABLE user
+-- ADD CONSTRAINT fk_user foreign key(address_id) references address(address_id);
+-- alter table category 
+-- add category_image varchar(400);
+
+
+ 
+
+-- DEMO DATA
+-- *************************
+-- insert into address(house_number,street_name,city,state,country,pincode)
+-- values('C-201','Shapoorji Pallonji Sukhobristi','Kolkata','West Bengal','India',700156),
+-- ('DC-250','Bellandur','Bangalore','Karnataka','India',560789);
+
+ 
+
+-- insert into user(full_name,email,password,phone_number,dob,wallet_balance,address_id)
+-- values('Bill Wood','billwood@gmail.com','bill12345','9087651423','1989-08-02',130000,10),
+-- ('Susan Jonas','susanjonas@gmail.com','susan@1234','9000651490','1990-11-13',50000,11);
+
+ 
+
+-- ********************************
+-- STORED PROCEDURE
+-- **********************
+
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_user_details`(in mail varchar(50))
+BEGIN
+	select * from user where email = mail;
+END
+
+
+
+
+
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_user_login`(in user_email varchar(50),in user_password varchar(30),out login_status smallint)
+BEGIN
+    if exists(select * from user where email = user_email and password = user_password)
+    then
+		set login_status = 1; -- Successful 
+	else
+		set login_status = 0; -- unsuccessful
+	end if;
+END
+
+
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_user_order`(in mail varchar(50))
+BEGIN
+	declare id int;
+	select user_id into id from user where email = mail; 
+	select * from orders where user_id = id;
+END
+
+
+
+
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_user_update`(in fullName varchar(40),in pass varchar(30),
+									in phoneNo varchar(10),in birth_date date,in wallet decimal,
+                                    in id int)
+BEGIN
+	update user set full_name = fullName , password = pass, phone_number = phoneNo,dob = birth_date,
+					wallet_balance = wallet 
+	where user_id = id;
+END
+
+
+
+------------------------------------------------------------------------------
+TABLE DATA
+------------------------------------------------------------------------------
+Category :
+----------
+insert into category(category_name,category_image)
+values('Clothing','https://blog.japanwondertravel.com/wp-content/uploads/2021/10/Japanese-clothing-store.jpg'),
+('Electronics','https://i.ebayimg.com/images/g/qC4AAOSwQQZkuRqP/s-l640.png'),
+('Home & Furniture','https://assets.architecturaldigest.in/photos/636500e647d8cd58d8905e14/1:1/w_1080,h_1080,c_limit/A%20modern%20Mumbai%20home%20where%20heirloom%20furniture%20take%20centrestage.jpg'),
+('Game & Sports','https://recentvacancies.com/wp-content/uploads/2023/03/Two-Reasons-Why-Sport-.png');
+
+
+Address :
+---------
+insert into address(house_number,street_name,city,state,country,pincode)
+values('098-C','Salt Lake','Noida','Delhi','India',200156),
+('B-102','Sagar Nagar','Noida','Delhi','India',20015),
+('D-657','Taragati Samanta Road','Noida','New Delhi','India',20119),
+('AB-123','New Town','Kolkata','West Bengal','India',700135),
+('101 C232','Bellandur','Bangalore','Karnataka','India',41109);
+
+
+User :
+------
+insert into user(full_name,email,password,phone_number,dob,wallet_balance,address_id)
+values('Nick Jonas','nickJonas@gmail.com','Nick@12345','0887651423','1988-12-12',20000,12),
+('Sam Billings','samBillings@gmail.com','Sam12345','9007651423','1990-09-12',9000,13),
+('Ahaan Sharma','ahaanSharma@gmail.com','Ahaan@12345','9001243423','1992-11-12',15000,14),
+('Joe Root','joeroot@gmail.com','Joe@12345','8900114562','1988-01-09',21002,15),
+('Jos Butler','josbulter2@gmail.com','Jos@12345','1299087234','1987-11-10',23000,16);
+
+Orders :
+---------
+insert into orders(user_id,order_date,total_amount)
+values(102,'2023-07-19',999),
+(103,'2023-02-23',13999),
+(102,'2023-05-13',29999);
+
+Product :
+----------
+insert into product(product_name,description,price,stock_quantity,category_id)
+values('Women A-line Yellow Dress','Color - Yellow,Length - Midi/Calf Length,Fabric - Georgette,Size - M',999,10,1),
+('MOTOROLA Edge 40','8 GB RAM | 256 GB ROM 16.51 cm (6.5 inch) Full HD+ Display 50MP + 13MP | 32MP Front Camera 4400 mAh Battery Dimensity 8020 Processor Vegan Leather',29999,5,2),
+('Seventh Heaven Milan 3 Seater Sofa','Upholestry: Chenille Filling Material: Foam W x H x D: 185.5 cm x 80 cm x 80 cm (6 ft 1 in x 2 ft 7 in x 2 ft 7 in) Symmetrical Delivery Condition: DIY - Basic assembly to be done with simple tools by the customer, comes with instructions.',12999,3,3);
+
+Order_Item:
+-----------
+insert into order_item(order_id,product_id,quantity,item_price)
+values(1,7,1,999),
+(2,7,1,999),
+(2,9,1,12999),
+(3,8,1,29999);
+
+Cart :
+------
+insert into cart(user_id)
+values(102),(103);
+
+Cart_Item :
+-----------
+insert into cart_item(cart_id,product_id,quantity)
+values(1,7,2),(1,8,1),(1,9,1),(2,9,1);
